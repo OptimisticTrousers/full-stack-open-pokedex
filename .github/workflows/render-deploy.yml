@@ -1,5 +1,5 @@
 name: Render Deploy
-on: 
+on:
   push:
     branches:
       - main
@@ -12,7 +12,7 @@ jobs:
         uses: bounceapp/render-action@0.12.0
         with:
           render: ${{ secrets.RENDER_TOKEN }}
-          service-id: d1qfkbgdl3ps738sh750
+          service-id: ${{ secrets.RENDER_SERVICE_ID }}
           retries: 3
           wait: 16000
           sleep: 30000
