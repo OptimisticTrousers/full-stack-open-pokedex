@@ -11,8 +11,18 @@ primary_region = 'iad'
 [env]
   PORT = "3000"
 
+[deploy]
+  strategy = "canary"
+
 [processes]
   app = "node app.js"
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/health"
 
 [http_service]
   internal_port = 3000
