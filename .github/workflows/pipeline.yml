@@ -34,3 +34,13 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+    tag_release:
+      needs: [simple_deployment_pipine]
+      if: ${{ github.event_name == 'push' }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: Bump version and push tag
+          uses: anothrNick/github-tag-action
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            DEFAULT_BUMP: "#patch"
