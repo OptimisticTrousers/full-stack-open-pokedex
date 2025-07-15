@@ -8,7 +8,7 @@ env:
 jobs:
   deploy:
     name: Deploy app
-    if: ${{ github.event_name == 'push' && github.env.CONDITION == 'false' }}
+    if: ${{ github.event_name == 'push' && github.env.CONDITION == false }}
     runs-on: ubuntu-22.04
     steps:
       - name: Wait for Render deployment
