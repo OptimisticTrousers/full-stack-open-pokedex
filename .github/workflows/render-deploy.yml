@@ -7,11 +7,12 @@ env:
   CONDITION: ${{ contains(join(github.event.commits.*.message, ''), '#skip') }}
 jobs:
   deploy:
-    name: Deploy app
     if: ${{ github.event_name == 'push' && github.env.CONDITION == 'true' }}
+    name: Deploy app
     runs-on: ubuntu-22.04
     steps:
       - name: Wait for Render deployment
+        uses: bounceapp/render-action@0.12.0
         with:
           render-token: ${{ secrets.RENDER_TOKEN }}
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
