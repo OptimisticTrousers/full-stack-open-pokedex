@@ -7,8 +7,8 @@ env:
   CONDITION: ${{ contains(join(github.event.commits.*.message, ''), '#skip') }}
 jobs:
   deploy:
-    if: ${{ github.event_name == 'push' && github.env.CONDITION == 'true' }}
     name: Deploy app
+    if: ${{ github.event_name == 'push' && github.env.CONDITION == 'false' }}
     runs-on: ubuntu-22.04
     steps:
       - name: Wait for Render deployment

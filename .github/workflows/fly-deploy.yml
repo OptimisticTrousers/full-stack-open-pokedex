@@ -10,7 +10,7 @@ env:
 jobs:
   deploy:
     name: Deploy app
-    if: ${{ github.event_name == 'push' && github.env.CONDITION == 'true' }}
+    if: ${{ github.event_name == 'push' && github.env.CONDITION == 'false' }}
     runs-on: ubuntu-22.04
     concurrency: deploy-group # optional: ensure only one action runs at a time
     steps:
