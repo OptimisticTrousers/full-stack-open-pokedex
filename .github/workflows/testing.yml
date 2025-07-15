@@ -5,6 +5,8 @@ on:
     branches:
       - main
 
+env:
+  CONDITION: ${{ contains(join(toJson(github.event.commits.*.message), ''), '#skip') }}
 jobs:
   a_test_job:
     runs-on: ubuntu-22.04
@@ -22,3 +24,5 @@ jobs:
         env:
           COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
         run: echo "$COMMIT_MESSAGES"
+        run: echo "env.CONDITION"
+        run: echo "join(toJson(github.event.commits.*.message), '')"
