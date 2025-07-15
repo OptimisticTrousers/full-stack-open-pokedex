@@ -12,7 +12,7 @@ jobs:
     name: Deploy app
     if: ${{ github.event_name == 'push' && github.env.CONDITION == false }}
     runs-on: ubuntu-22.04
-    concurrency: deploy-group # optional: ensure only one action runs at a time
+    concurrency: deploy-group 
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
