@@ -4,7 +4,7 @@ on:
     branches:
       - main
 env:
-  CONDITION: ${{ contains(join(toJson(github.event.commits.*.message), ''), '#skip') }}
+  CONDITION: ${{ contains(join(github.event.commits.*.message, ''), '#skip') }}
 jobs:
   deploy:
     name: Deploy app
