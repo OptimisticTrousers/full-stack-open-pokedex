@@ -6,16 +6,32 @@ on:
     branches:
       - main
 env:
-  CONDITION: ${{ contains(join(github.event.commits.*.message), '#skip') }}
+  CONDITION: ${{ contains(github.event.head_commit.message, '#skip') }}
 jobs:
   deploy:
     name: Deploy app
-    if: ${{ github.env.CONDITION == 'false' }}
+    if: ${{ github.env.CONDITION == false }}
     runs-on: ubuntu-22.04
-    concurrency: deploy-group 
+    concurrency: deploy-group
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: The job has succeeded
+        if: ${{ success() }}
+        uses: rjstone/discord-webhook-notify@v2
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: info
+          text: A new version of Pokedex deployed
+          description: to https://full-stack-open-pokedex-patient-dew-8026.fly.dev/ by ${{ github.event.head_commit.committer.username }}
+      - name: The job has failed
+        uses: rjstone/discord-webhook-notify@v2
+        if: ${{ failure() }}
+        with:
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          severity: error
+          text: Build failed
+          description: commit ${{ github.event.head_commit.url }} by ${{ github.event.head_commit.committer.username }} broke the build :()
