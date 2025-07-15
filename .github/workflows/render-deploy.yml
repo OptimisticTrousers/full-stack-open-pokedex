@@ -9,7 +9,7 @@ jobs:
   deploy:
     name: Deploy app
     if: ${{ github.event_name == 'push' && github.env.CONDITION == 'true' }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Wait for Render deployment
         uses: bounceapp/render-action@0.12.0

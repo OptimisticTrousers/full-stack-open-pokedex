@@ -11,7 +11,7 @@ jobs:
   deploy:
     name: Deploy app
     if: ${{ github.event_name == 'push' && github.env.CONDITION == 'true' }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     concurrency: deploy-group # optional: ensure only one action runs at a time
     steps:
       - uses: actions/checkout@v4
