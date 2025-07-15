@@ -8,9 +8,9 @@ env:
 jobs:
   deploy:
     name: Deploy app
+    if: ${{ github.event_name == 'push' && github.env.CONDITION == 'true' }}
     runs-on: ubuntu-22.04
     steps:
-        if: ${{ github.event_name == 'push' && env.CONDITION == 'true' }}
       - name: Wait for Render deployment
         with:
           render-token: ${{ secrets.RENDER_TOKEN }}
